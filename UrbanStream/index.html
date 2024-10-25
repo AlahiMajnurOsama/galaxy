@@ -1,1 +1,421 @@
+<html><head><base href="https://urbanstreams.app/">
+<title>Urban Streams - Live TV & Streaming Software</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Download Urban Streams - Your ultimate live TV and streaming companion">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
 
+:root {
+    --primary: #6366f1;
+    --secondary: #4f46e5;
+    --accent: #f472b6;
+    --text: #ffffff;
+    --bg-dark: #0f172a;
+    --bg-card: rgba(255, 255, 255, 0.05);
+    --gradient: linear-gradient(135deg, #6366f1, #f472b6);
+}
+
+body {
+    background: var(--bg-dark);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Animated Water Wave Background */
+.water-waves {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.wave {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: var(--gradient);
+    opacity: 0.3;
+    animation: wave 25s infinite linear;
+}
+
+.wave:nth-child(2) {
+    animation-delay: -5s;
+    opacity: 0.2;
+}
+
+@keyframes wave {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Water Drop Animation */
+.water-drop {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: drop 4s linear infinite;
+}
+
+@keyframes drop {
+    0% { transform: translateY(-100vh); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Header Section */
+.header {
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.logo {
+    width: 180px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Features Section */
+.features {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Screenshots Section */
+.screenshots {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.screenshot-container {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding: 2rem 0;
+    scroll-snap-type: x mandatory;
+}
+
+.screenshot {
+    flex: 0 0 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    scroll-snap-align: center;
+    transition: transform 0.3s ease;
+}
+
+.screenshot:hover {
+    transform: scale(1.05);
+}
+
+.screenshot img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Download Section */
+.download-section {
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.download-btn {
+    background: var(--gradient);
+    color: white;
+    padding: 1.2rem 3rem;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: var(--bg-dark);
+    border-radius: 24px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 90%;
+    margin: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+/* Success Message */
+.success-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--gradient);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    transform: translateX(200%);
+    animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+    to { transform: translateX(0); }
+}
+
+</style>
+</head>
+<body>
+
+<div class="water-waves">
+    <div class="wave"></div>
+    <div class="wave"></div>
+</div>
+
+<header class="header">
+    <img src="https://raw.githubusercontent.com/AlahiMajnurOsama/galaxy/refs/heads/main/UrbanStream/includes/logo.png" alt="Urban Streams Logo" class="logo">
+    <h1>Urban Streams</h1>
+    <p>Your Ultimate Live TV & Streaming Companion</p>
+</header>
+
+<section class="features">
+    <div class="feature-grid">
+        <div class="feature-card" data-aos="fade-up">
+            <h3>Live TV</h3>
+            <p>Enjoy your favorite channels live, anytime, anywhere</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <h3>Latest Movies & Contents</h3>
+            <p>Vast library of movies and TV shows at your fingertips</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <h3>Stream Own Production</h3>
+            <p>Stream your favourite shows with our integrated Modern Player.</p>
+        </div>
+    </div>
+</section>
+
+<section class="screenshots">
+    <h2>App Interface</h2>
+    <div class="screenshot-container">
+        <div class="screenshot" data-aos="fade-right">
+            <img src="https://raw.githubusercontent.com/AlahiMajnurOsama/galaxy/refs/heads/main/UrbanStream/includes/1.png" alt="Sports Interface" width="300" height="600">
+        </div>
+        <div class="screenshot" data-aos="fade-right" data-aos-delay="100">
+            <img src="https://raw.githubusercontent.com/AlahiMajnurOsama/galaxy/refs/heads/main/UrbanStream/includes/2.png" alt="Live TV Interface" width="300" height="600">
+        </div>
+        <div class="screenshot" data-aos="fade-right" data-aos-delay="200">
+            <img src="https://raw.githubusercontent.com/AlahiMajnurOsama/galaxy/refs/heads/main/UrbanStream/includes/3.png" alt="Latest Movies Interface" width="300" height="600">
+        </div>
+        <div class="screenshot" data-aos="fade-right" data-aos-delay="300">
+            <img src="https://raw.githubusercontent.com/AlahiMajnurOsama/galaxy/refs/heads/main/UrbanStream/includes/4.png" alt="NaV Interface" width="300" height="600">
+        </div>
+    </div>
+</section>
+
+<section class="download-section">
+    <button id="downloadBtn" class="download-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+        </svg>
+        Download Now
+    </button>
+</section>
+
+<div id="termsModal" class="modal">
+    <div class="modal-content">
+        <h3>License Agreement</h3>
+        <div class="terms-scroll">
+            <!-- Terms content -->
+            	<div class="terms">
+    <h2>Urban Streams - Terms and Conditions</h2>
+    <p>Urban Streams is provided as-is for personal use, offering live TV and streaming content. By using this app, you agree not to interfere with its functionality or redistribute content. Content availability may vary, and we are not liable for any interruptions. We reserve the right to modify the app or these terms without notice.</p>
+    <p class="contact">For inquiries, contact us at <a href="mailto:bgcgeeks@gmail.com">bgcgeeks@gmail.com</a></p>
+</div>
+
+<style>
+    .terms {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        color: #333;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 20px auto;
+    }
+    .terms h2 {
+        font-size: 22px;
+        text-align: center;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    .terms p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #555;
+        text-align: justify;
+        margin-bottom: 15px;
+    }
+    .terms .contact {
+        font-size: 14px;
+        text-align: center;
+        color: #888;
+        margin-top: 15px;
+    }
+    .terms .contact a {
+        color: #333;
+        text-decoration: none;
+    }
+    .terms .contact a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+
+        </div>
+        <div class="checkbox-wrapper">
+            <input type="checkbox" id="termsCheckbox">
+            <label for="termsCheckbox">I agree to the terms and conditions</label>
+        </div>
+        <button id="confirmDownload" class="download-btn" disabled>Download</button>
+    </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({
+    duration: 1000,
+    once: true
+});
+
+// Water drops animation
+function createWaterDrop() {
+    const drop = document.createElement('div');
+    drop.className = 'water-drop';
+    drop.style.left = Math.random() * 100 + 'vw';
+    document.body.appendChild(drop);
+    
+    drop.addEventListener('animationend', () => drop.remove());
+}
+
+setInterval(createWaterDrop, 100);
+
+// Download functionality
+const downloadBtn = document.getElementById('downloadBtn');
+const termsModal = document.getElementById('termsModal');
+const termsCheckbox = document.getElementById('termsCheckbox');
+const confirmDownload = document.getElementById('confirmDownload');
+
+downloadBtn.addEventListener('click', () => {
+    termsModal.classList.add('active');
+});
+
+termsCheckbox.addEventListener('change', () => {
+    confirmDownload.disabled = !termsCheckbox.checked;
+});
+
+confirmDownload.addEventListener('click', () => {
+    // Trigger download
+    window.location.href = 'https://raw.githubusercontent.com/AlahiMajnurOsama/galaxy/refs/heads/main/UrbanStream/includes/v1.apk';
+    
+    // Close modal
+    termsModal.classList.remove('active');
+    
+    // Show success message
+    const toast = document.createElement('div');
+    toast.className = 'success-toast';
+    toast.innerHTML = `
+        <h4>Thank you for downloading Urban Streams!</h4>
+        <p>Your download will begin shortly. Enjoy streaming!</p>
+    `;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => toast.remove(), 5000);
+});
+
+// Close modal when clicking outside
+termsModal.addEventListener('click', (e) => {
+    if (e.target === termsModal) {
+        termsModal.classList.remove('active');
+    }
+});
+</script>
+</body>
+</html>
