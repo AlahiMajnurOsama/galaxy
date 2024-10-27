@@ -22,7 +22,7 @@
     right: 0;
     text-align: center;
     color: rgba(255, 255, 255, 0.8);
-    font-size: 24px;
+    font-size: 18px;
     letter-spacing: 2px;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     z-index: 1000;
@@ -30,7 +30,7 @@
   }
   #controls {
     position: absolute;
-    bottom: 20px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -49,8 +49,8 @@
     margin-bottom: 5px;
   }
   .control-button {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.3);
     border: 2px solid white;
@@ -178,14 +178,18 @@
     font-size: 14px;
     line-height: 1.6;
     margin-bottom: 10px;
+    padding: 0 10px
   }
   @media (max-width: 768px) {
     .project-carousel {
       width: 100%;
+      padding: 0;
     }
     
     .project-card {
       min-width: 85vw;
+      margin: 20px auto;
+      transform: scale(0.95);
     }
     
     .project-card {
@@ -195,10 +199,13 @@
     
     .project-title {
       font-size: 20px;
+      margin-top: 15px;
     }
   }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 </head>
 <body>
 <div id="title">FluidSy</div>
